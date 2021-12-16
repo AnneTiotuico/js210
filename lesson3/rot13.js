@@ -44,38 +44,68 @@ index should be 27-26
 
 */
 
-function getNewIndex(index) {
-	const placesToRotate = 13;
-	const alphabetLength = 26;
-	const maxIndex = 25;
+// function getNewIndex(index) {
+// 	const placesToRotate = 13;
+// 	const alphabetLength = 26;
+// 	const maxIndex = 25;
 	
-	let newIndex = index + placesToRotate;
+// 	let newIndex = index + placesToRotate;
 	
-	if (newIndex > maxIndex) {
-		newIndex -= alphabetLength;
-	}
+// 	if (newIndex > maxIndex) {
+// 		newIndex -= alphabetLength;
+// 	}
 	
-	return newIndex;
+// 	return newIndex;
+// }
+
+// function rot13(string) {
+// 	const lowerAlphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+// 	const upperAlphabet = lowerAlphabet.map(letter => letter.toUpperCase());
+	
+// 	let result = string.split('').map(char => {
+// 		if (lowerAlphabet.includes(char)) {
+// 			let newIndex = getNewIndex(lowerAlphabet.indexOf(char));
+// 			return lowerAlphabet[newIndex];
+// 		} else if (upperAlphabet.includes(char)) {
+// 			let newIndex = getNewIndex(upperAlphabet.indexOf(char));
+// 			return upperAlphabet[newIndex];
+// 		} else {
+// 			return char;
+// 		}
+// 	});
+	
+// 	return result.join('');
+	
+// }
+
+// Refactored 
+function rotatedChar(char) {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+  const placesToRotate = 13;
+  const index = alphabet.indexOf(char.toLowerCase());
+  let newIndex = index + placesToRotate;
+  
+  if (newIndex > alphabet.length - 1) {
+    newIndex -= alphabet.length;
+  }
+  
+  return alphabet[newIndex];
+}
+
+function correctCase(char) {
+  return char.match(/[A-Z]/) ? rotatedChar(char).toUpperCase() : rotatedChar(char);
 }
 
 function rot13(string) {
-	const lowerAlphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-	const upperAlphabet = lowerAlphabet.map(letter => letter.toUpperCase());
-	
-	let result = string.split('').map(char => {
-		if (lowerAlphabet.includes(char)) {
-			let newIndex = getNewIndex(lowerAlphabet.indexOf(char));
-			return lowerAlphabet[newIndex];
-		} else if (upperAlphabet.includes(char)) {
-			let newIndex = getNewIndex(upperAlphabet.indexOf(char));
-			return upperAlphabet[newIndex];
-		} else {
-			return char;
-		}
-	});
-	
-	return result.join('');
-	
+  let result = string.split('').map(char => {
+    if (char.match(/[a-zA-Z]/)) {
+      return correctCase(char);
+    } else {
+      return char;
+    }
+  });
+  
+  return result.join('');
 }
 
 console.log(rot13('Teachers open the door, but you must enter by yourself.'));

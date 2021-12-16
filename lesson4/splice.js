@@ -23,17 +23,17 @@ and increment
 
 */
 
-// function slice(arr, start, end) {
-//   let newArr = [];
+function slice(arr, start, end) {
+  let newArr = [];
 
-//   let index2 = 0;
-//   for(let index = start; index < end; index++) {
-//     newArr[index2] = arr[index];
-//     index2 += 1;
-//   }
+  let index2 = 0;
+  for(let index = start; index < end; index++) {
+    newArr[index2] = arr[index];
+    index2 += 1;
+  }
 
-//   return newArr;
-// }
+  return newArr;
+}
 
 // function splice(arr, start, num) {
 //   let origElements = slice(arr, 0, arr.length);
@@ -57,34 +57,53 @@ and increment
 //   return removedArr;
 // }
 
-
-// other approach:
-
-function push(arr, value) {
-  arr[arr.length] = value;
-  return arr.length;
-}
-
+// refactored:
 function splice(arr, start, num) {
-  let removedArr = [];
-  let leftOver = [];
-
-  for (let index = 0; index < arr.length; index++) {
-    if (index >= start && index < (start + num)) {
-      push(removedArr, arr[index]);
-    } else {
-      push(leftOver, arr[index]);
-    }
-  }
+  let origElements = slice(arr, 0, arr.length);
+  let removedArr = slice(arr, start, start + num);
 
   arr.length = arr.length - num;
 
-  for (let index = 0; index < leftOver.length; index++) {
-    arr[index] = leftOver[index];
+  for (let index = 0, index2 = 0; index2 < origElements.length; index2++) {
+    if (index2 >= start && index2 < (start + num)) {
+      continue;
+    } else {
+      arr[index] = origElements[index2];
+      index += 1;
+    }
   }
 
   return removedArr;
 }
+
+
+// other approach:
+
+// function push(arr, value) {
+//   arr[arr.length] = value;
+//   return arr.length;
+// }
+
+// function splice(arr, start, num) {
+//   let removedArr = [];
+//   let leftOver = [];
+
+//   for (let index = 0; index < arr.length; index++) {
+//     if (index >= start && index < (start + num)) {
+//       push(removedArr, arr[index]);
+//     } else {
+//       push(leftOver, arr[index]);
+//     }
+//   }
+
+//   arr.length = arr.length - num;
+
+//   for (let index = 0; index < leftOver.length; index++) {
+//     arr[index] = leftOver[index];
+//   }
+
+//   return removedArr;
+// }
 
 let count = [1, 2, 3, 4, 5, 6, 7, 8];
 console.log(splice(count, 2, 5));                   // [ 3, 4, 5, 6, 7 ]

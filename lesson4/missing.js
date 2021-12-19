@@ -14,10 +14,9 @@ return newArr
 */
 
 function missing(arr) {
-  let sortedArr = arr.sort();
   let newArr = [];
 
-  for (let num = sortedArr[0]; num < sortedArr[arr.length - 1]; num++) {
+  for (let num = arr[0]; num < arr[arr.length - 1]; num++) {
     if (!arr.includes(num)) { newArr.push(num) }
   }
 

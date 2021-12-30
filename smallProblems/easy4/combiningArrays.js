@@ -13,9 +13,20 @@ arrays. You may assume that both arguments will always be arrays.
 //   return result;
 // }
 
+// function union(arr1, arr2) {
+//   return arr2.reduce((result, item, index) => {
+//     if (!result.includes(arr2[index])) result.push(arr2[index]);
+//     return result;
+//   }, arr1.slice());
+// }
+
+// console.log(union([1, 3, 5], [3, 6, 9]));    // [1, 3, 5, 6, 9]
+
+// -----combiningArrays refactored
+
 function union(arr1, arr2) {
-  return arr2.reduce((result, item, index) => {
-    if (!result.includes(arr2[index])) result.push(arr2[index]);
+  return arr2.reduce((result, item) => {
+    if (!result.includes(item)) result.push(item);
     return result;
   }, arr1.slice());
 }
